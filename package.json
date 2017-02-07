@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
-	"bin": {
-		"sheet-cli": "index.js"
-	},
+  "bin": {
+    "sheet-cli": "index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csv-parse": "^1.2.0",
     "xlsx": "^0.8.2"
   }
 }

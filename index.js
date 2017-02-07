@@ -4,57 +4,8 @@
 // - handle csv and other formats? this is why I'm translating the xlsx lib.
 // - use something like blessedJs for handling display.
 
-const XLSX = require('xlsx')
-const fs = require('fs')
 const path = require('path')
-
-const letters = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
-
-const xlsxTypeMappings = {
-	n: 'number',
-	s: 'string',
-	d: 'date',
-	b: 'boolean'
-}
-
-const convertXlsxCell = exports.convertXlsxCell = (cell) => {
-	return {
-		value: cell.v,
-		type: xlsxTypeMappings[cell.t]
-	}
-}
-
-const convertXlsxRow = exports.convertXlsxRow = (sheet, index) => {
-	let letter, row = []
-	for(let l = 0; l < letters.length; l++) {
-		letter = letters[l]
-		const location = letter + index
-		const cell = sheet[location]
-		if(cell === undefined) break
-		row.push(convertXlsxCell(cell))
-	}
-	return row
-}
-
-const openFileXlsx = exports.openFileXlsx = (absPath) => {
-	const workbook = XLSX.readFile(absPath)
-	return workbook
-		.SheetNames
-		.filter((name) => !/^[!]/.test(name))
-		.map((name) => {
-			let index = 0
-			let sheet = workbook.Sheets[name]
-			const rows = []
-			while(sheet['A' + (++index)]) {
-				rows.push(convertXlsxRow(sheet, index))
-			}
-
-			return {
-				name,
-				rows
-			}
-		})
-}
+const openFile = require('./lib/open-file')
 
 const formattingMappings = {
 	number: (num) => num + '',
@@ -99,7 +50,7 @@ const display = exports.display = (sheet) => {
 	})
 }
 
-const sheets = openFileXlsx(path.join(process.cwd(), process.argv[2]))
+const sheets = openFile(path.join(process.cwd(), process.argv[2]))
 
 display(sheets[0] || [])
 
