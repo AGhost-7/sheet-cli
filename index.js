@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-// TODO:
-// - handle csv and other formats? this is why I'm translating the xlsx lib.
-// - use something like blessedJs for handling display.
-
 const path = require('path')
 const openFile = require('./lib/open-file')
 
