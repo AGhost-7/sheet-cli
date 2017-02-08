@@ -25,12 +25,7 @@ const display = exports.display = (sheet) => {
 	const screen = blessed.screen({
 		autoPadding: false,
 		log: process.env.SHEET_CLI_LOGFILE || path.join(process.env.HOME, '.sheetcli.log'),
-		smartCSR: true,
-		style: {
-			fg: 'white',
-			bg: 'black',
-			transparent: false
-		}
+		smartCSR: true
 	})
 	const scrollbox = blessed.box({
 		scrollable: true,
@@ -43,7 +38,6 @@ const display = exports.display = (sheet) => {
 	const table = blessed.table({
 		rows: rows,
 		border: 'line',
-		tags: true,
 		style: {
 			border: {
 				fg: 'blue'
