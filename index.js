@@ -16,7 +16,7 @@ const scanMaximums = (formattedRow) => {
 		row.forEach((cell, ind) => {
 			accu[ind] = Math.max(cell.length, accu[ind] || 0)
 		})
-		return accu;
+		return accu
 	}, {})
 }
 
