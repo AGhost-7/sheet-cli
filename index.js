@@ -2,6 +2,8 @@
 
 const path = require('path')
 const openFile = require('./lib/open-file')
+const blessed = require('blessed')
+const fs = require('fs')
 
 const formattingMappings = {
 	number: (num) => num + '',
@@ -10,40 +12,49 @@ const formattingMappings = {
 	date: (dt) => dt.toISOString()
 }
 
-// This is used to determine the width of the rows
-const scanMaximums = (formattedRow) => {
-	return formattedRow.reduce((accu, row) => {
-		row.forEach((cell, ind) => {
-			accu[ind] = Math.max(cell.length, accu[ind] || 0)
-		})
-		return accu
-	}, {})
-}
-
-const spaces = (times) => {
-	let str = ''
-	while(times--) str += ' '
-	return str
-}
-
-const display = exports.display = (sheet) => {
-	const formatted = sheet.rows.map((row) => {
+const formatData = (sheet) => {
+	return sheet.rows.map((row) => {
 		return row.map((cell) => {
 			return formattingMappings[cell.type](cell.value)
 		})
 	})
-	const maxLns = scanMaximums(formatted)
-	formatted.forEach((row) => {
-		const rowStr = row.map((cell, ind) => {
-			const maxLn = maxLns[ind]
-			const padding = maxLn + 2
-			const rightPadding = Math.floor(padding / 2)
-			const leftPadding = Math.ceil(padding / 2)
-			return spaces(leftPadding) + cell + spaces(rightPadding)
-		}).join('|')
+}
 
-		console.log(rowStr)
+const display = exports.display = (sheet) => {
+	const rows = formatData(sheet)
+	const screen = blessed.screen({
+		autoPadding: false,
+		log: process.env.SHEET_CLI_LOGFILE || path.join(process.env.HOME, '.sheetcli.log'),
+		smartCSR: true,
+		style: {
+			fg: 'white',
+			bg: 'black',
+			transparent: false
+		}
 	})
+	const scrollbox = blessed.box({
+		scrollable: true,
+		keys: true,
+		vi: true,
+		alwaysScroll: true,
+		parent: screen
+	})
+	scrollbox.focus()
+	const table = blessed.table({
+		rows: rows,
+		border: 'line',
+		tags: true,
+		style: {
+			border: {
+				fg: 'blue'
+			}
+		},
+		parent: scrollbox
+	})
+	screen.key('q', () => {
+		process.exit(0)
+	})
+	screen.render()
 }
 
 const selectSheet = exports.selectSheet = (sheetName, sheets) => {

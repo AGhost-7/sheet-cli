@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "blessed": "^0.1.81",
     "csv-parse": "^1.2.0",
     "xlsx": "^0.8.2"
   },
