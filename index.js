@@ -46,8 +46,25 @@ const display = exports.display = (sheet) => {
 	})
 }
 
-const sheets = openFile(path.join(process.cwd(), process.argv[2]))
+const selectSheet = exports.selectSheet = (sheetName, sheets) => {
+	if(sheetName) {
+		const search = sheetName.toLowerCase().trim()
+		const found = sheets.filter((sheet) => {
+			return sheet.name.toLowerCase().trim().indexOf(search) > -1;
+		})[0]
+		if(found) return found
+	}
+	return sheets[0]
+}
 
-display(sheets[0] || [])
+const main = exports.main = (process) => {
+	const file = process.argv[2]
+	const sheets = openFile(path.join(process.cwd(), file))
 
+	display(selectSheet(process.argv[3], sheets) || [])
+}
+
+if(require.main === module) {
+	main(process)
+}
 
