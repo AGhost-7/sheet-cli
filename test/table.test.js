@@ -37,6 +37,20 @@ describe('table', () => {
 		assert.deepEqual(padded, expect)
 	})
 
+	it('pads with line breaks', () => {
+		const data = [
+			['a\na', 'b'],
+			['cc', 'd']
+		]
+		const expect = [
+			['a \na ', 'b\n '],
+			['cc', 'd']
+		]
+		const dimensions = renderer.cellDimensions(data)
+		const padded = renderer.padRows(data, dimensions)
+		assert.deepEqual(padded, expect)
+	})
+
 	it('renders the borders', () => {
 		const expect = [
 			[ '┌', '─', '┬', '─', '┬', '──', '┐' ],
