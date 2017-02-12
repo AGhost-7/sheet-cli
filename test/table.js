@@ -15,4 +15,9 @@ screen.key('q', () => {
 	process.exit(0)
 })
 
+table.setRows([
+	['a', 'b', 'c'],
+	['d', 'e', 'f']
+])
+
 screen.render()
