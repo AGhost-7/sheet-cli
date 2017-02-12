@@ -21,22 +21,33 @@ describe('table', () => {
 			['d  ', 'd   ', 'ee', 'Ｆ']
 		]
 
-		assert.deepEqual(renderer.padRows(data1), expect)
+		const dimensions = renderer.cellDimensions(data1)
+		const padded = renderer.padRows(data1, dimensions)
+		assert.deepEqual(padded, expect)
 	})
 
-	it.skip('renders the borders', () => {
+	it('renders the borders', () => {
 		const expect = [
-			['┌', '─', '┬', '─', '┬', '──', '┐'],
-			['│', 'a', '│', 'b', '│', 'cc', '│'],
-			['└', '─', '┴', '─', '┴', '──', '┘']
+			[ '┌', '─', '┬', '─', '┬', '──', '┐' ],
+			[ '│', 'a', '│', 'b', '│', 'cc', '│' ],
+			[ '├', '─', '┼', '─', '┼', '──', '┤' ],
+			[ '│', 'd', '│', 'f', '│', 'gg', '│' ],
+			[ '├', '─', '┼', '─', '┼', '──', '┤' ],
+			[ '│', 'h', '│', 'i', '│', 'jj', '│' ],
+			[ '└', '─', '┴', '─', '┴', '──', '┘' ]
 		]
-		//const drawn = expect.map((row) => row.join('')).join('\n')
 		const data = [
-			['a', 'b', 'cc']//,
-			//['d', 'f', 'gg'],
-			//['h', 'i', 'jj']
+			['a', 'b', 'cc'],
+			['d', 'f', 'gg'],
+			['h', 'i', 'jj']
 		]
-		//console.log(expect)
-		assert.deepEqual(renderer.withBorders(data), expect)
+		const dimensions = renderer.cellDimensions(data)
+		const rendered = renderer.renderBorders(data, dimensions)
+		const result = rendered.map((row) => {
+			return row.map((row) => row.value)
+		})
+		assert.equal(result.length, expect.length)
+		assert.equal(result[0].length, expect[0].length)
+		assert.deepEqual(result, expect)
 	})
 })
