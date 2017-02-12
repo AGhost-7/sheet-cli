@@ -11,8 +11,19 @@ describe('table', () => {
 	]
 	const renderer = new TableRenderer()
 
-	it('calculates the column widths', () => {
-		assert.deepEqual(renderer.columnWidths(data1), [3, 4, 2, 2])
+	it('calculates string widths', () => {
+		assert.equal(renderer.stringWidth('a\nb'), 1)
+		assert.equal(renderer.stringWidth('a '), 2)
+	})
+
+	it('calculates string heights', () => {
+		assert.equal(renderer.stringHeight('a\nb'), 2)
+		assert.equal(renderer.stringHeight('a\\nb'), 1)
+	})
+
+	it('calculates the cell dimensions', () => {
+		const dimensions = renderer.cellDimensions(data1)
+		assert.deepEqual(dimensions.widths, [3, 4, 2, 2])
 	})
 
 	it('pads the data', () => {
@@ -46,6 +57,7 @@ describe('table', () => {
 		const result = rendered.map((row) => {
 			return row.map((row) => row.value)
 		})
+		console.log(result)
 		assert.equal(result.length, expect.length)
 		assert.equal(result[0].length, expect[0].length)
 		assert.deepEqual(result, expect)
