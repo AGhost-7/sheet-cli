@@ -39,7 +39,6 @@ describe('table', () => {
 		})
 		renderer.printPadded(padded)
 		assert.deepEqual(chars, expect)
-		//assert.deepEqual(padded, expect)
 	})
 
 	it('pads with line breaks', () => {
@@ -69,27 +68,27 @@ describe('table', () => {
 
 	it('renders the borders', () => {
 		const expect = [
-			[ '┌', '─', '┬', '─', '┬', '──', '┐' ],
-			[ '│', 'a', '│', 'b', '│', 'cc', '│' ],
-			[ '├', '─', '┼', '─', '┼', '──', '┤' ],
-			[ '│', 'd', '│', 'f', '│', 'gg', '│' ],
-			[ '├', '─', '┼', '─', '┼', '──', '┤' ],
-			[ '│', 'h', '│', 'i', '│', 'jj', '│' ],
-			[ '└', '─', '┴', '─', '┴', '──', '┘' ]
+			[ '┌', '─', '┬', '─', '─', '┬', '─', '─', '┐' ],
+			[ '│', 'a', '│', 'b', ' ', '│', 'c', 'c', '│' ],
+			[ '├', '─', '┼', '─', '─', '┼', '─', '─', '┤' ],
+			[ '│', 'd', '│', 'f', 'f', '│', 'g', ' ', '│' ],
+			[ '├', '─', '┼', '─', '─', '┼', '─', '─', '┤' ],
+			[ '│', 'h', '│', 'i', ' ', '│', 'j', ' ', '│' ],
+			[ '│', ' ', '│', ' ', ' ', '│', 'j', ' ', '│' ],
+			[ '└', '─', '┴', '─', '─', '┴', '─', '─', '┘' ]
 		]
 		const data = [
 			['a', 'b', 'cc'],
-			['d', 'f', 'gg'],
-			['h', 'i', 'jj']
+			['d', 'ff', 'g'],
+			['h', 'i', 'j\nj']
 		]
 		const dimensions = renderer.cellDimensions(data)
-		const rendered = renderer.renderBorders(data, dimensions)
+		const padded = renderer.padRows(data, dimensions)
+		const rendered = renderer.renderBorders(padded, dimensions)
 		const result = rendered.map((row) => {
-			return row.map((row) => row.value)
+			return row.map((cell) => cell.toString())
 		})
-		console.log(result)
-		assert.equal(result.length, expect.length)
-		assert.equal(result[0].length, expect[0].length)
+		console.log(result.map((row) => row.join('')).join('\n'))
 		assert.deepEqual(result, expect)
 	})
 })
