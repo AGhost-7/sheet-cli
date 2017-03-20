@@ -1,7 +1,7 @@
 
 const table = require('../lib/table')
 const TableRenderer = table.TableRenderer
-const assert = require('assert')
+const assert = require('power-assert')
 
 describe('table', () => {
 
@@ -28,13 +28,18 @@ describe('table', () => {
 
 	it('pads the data', () => {
 		const expect = [
-			['a a', 'bbbb', 'c ', '  '],
-			['d  ', 'd   ', 'ee', 'Ｆ']
+			['a', ' ', 'a', 'b', 'b', 'b', 'b', 'c', ' ', ' ', ' '],
+			['d', ' ', ' ', 'd', ' ', ' ', ' ', 'e', 'e', 'Ｆ']
 		]
 
 		const dimensions = renderer.cellDimensions(data1)
 		const padded = renderer.padRows(data1, dimensions)
-		assert.deepEqual(padded, expect)
+		const chars = padded.map((row) => {
+			return row.map((cell) => cell.toString())
+		})
+		renderer.printPadded(padded)
+		assert.deepEqual(chars, expect)
+		//assert.deepEqual(padded, expect)
 	})
 
 	it('pads with line breaks', () => {
@@ -42,13 +47,24 @@ describe('table', () => {
 			['a\na', 'b'],
 			['cc', 'd']
 		]
-		const expect = [
-			['a \na ', 'b\n '],
-			['cc', 'd']
-		]
+		
 		const dimensions = renderer.cellDimensions(data)
 		const padded = renderer.padRows(data, dimensions)
-		assert.deepEqual(padded, expect)
+		renderer.printPadded(padded)
+		assert.equal(padded[0][0].cell.column, padded[1][0].cell.column)
+		assert.equal(padded[0][0].cell.column, 0)
+
+		const expect = [
+			['a', ' ', 'b'],
+			['a', ' ', ' '],
+			['c', 'c', 'd']
+		]
+
+		const chars = padded.map((row) => {
+			return row.map((cell) => cell.toString())
+		})
+
+		assert.deepEqual(chars, expect)
 	})
 
 	it('renders the borders', () => {
