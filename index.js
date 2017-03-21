@@ -4,6 +4,7 @@ const path = require('path')
 const openFile = require('./lib/open-file')
 const blessed = require('blessed')
 const fs = require('fs')
+const table = require('./lib/table')
 
 const formattingMappings = {
 	number: (num) => num + '',
@@ -27,23 +28,9 @@ const display = exports.display = (sheet) => {
 		log: process.env.SHEET_CLI_LOGFILE || path.join(process.env.HOME, '.sheetcli.log'),
 		smartCSR: true
 	})
-	const scrollbox = blessed.box({
-		scrollable: true,
-		keys: true,
-		vi: true,
-		alwaysScroll: true,
-		parent: screen
-	})
-	scrollbox.focus()
-	const table = blessed.table({
-		rows: rows,
-		border: 'line',
-		style: {
-			border: {
-				fg: 'blue'
-			}
-		},
-		parent: scrollbox
+	const tbl = table({
+		parent: screen,
+		rows: rows
 	})
 	screen.key('q', () => {
 		process.exit(0)
