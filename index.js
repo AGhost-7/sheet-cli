@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict'
+
 const path = require('path')
 const openFile = require('./lib/open-file')
 const blessed = require('blessed')
