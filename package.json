@@ -1,7 +1,7 @@
 {
   "name": "sheet-cli",
-  "version": "0.3.0",
-  "description": "",
+  "version": "0.3.1",
+  "description": "A simple excel spreadsheet and csv viewer",
   "main": "index.js",
   "bin": {
     "sheet-cli": "index.js"
@@ -9,8 +9,25 @@
   "scripts": {
     "test": "mocha test/*.test.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Jonathan Boudreau <jonathan.boudreau.92@gmail.com>",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AGhost-7/sheet-cli.git"
+	},
+	"bugs": {
+		"url": "https://github.com/AGhost-7/sheet-cli/issues"
+	},
+	"homepage": "https://github.com/AGhost-7/sheet-cli#readme",
+  "license": "MIT",
+	"keywords": [
+		"CSV",
+		"Excel",
+		"XLSX",
+		"Viewer",
+		"Document",
+		"Command",
+		"Line"
+	],
   "dependencies": {
     "blessed": "^0.1.81",
     "csv-parse": "^1.2.0",
