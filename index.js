@@ -12,7 +12,7 @@ const formattingMappings = {
 	number: (num) => num + '',
 	string: (str) => str,
 	// TODO: Use momentJs to pretty format dates.
-	date: (dt) => instanceof Date ? dt.toISOString() : dt,
+	date: (dt) => dt instanceof Date ? dt.toISOString() : dt,
 	boolean: (b) => b ? 'true' : 'false'
 }
 
