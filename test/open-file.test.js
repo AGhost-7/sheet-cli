@@ -43,4 +43,19 @@ describe('open-file', () => {
 		const sheet = openFixture('./fixtures/simple.xlsx')
 		assert.deepEqual(sheet.rows, expected)
 	})
+
+	it('should normalize columns', () => {
+		const data = [
+			[
+				{ type: 'string', value: '1' },
+				{ type: 'string', value: '2' }
+			],
+			[
+				{ type: 'string', value : '3' }
+			]
+		]
+		const normalized = openFile.normalizeColumns(data)
+		assert.equal(normalized[1].length, 2)
+	})
+
 })
