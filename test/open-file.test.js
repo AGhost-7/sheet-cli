@@ -2,35 +2,45 @@ const openFile = require('../lib/open-file')
 const path = require('path')
 const assert = require('assert')
 
-const createScenario = (relPath) => {
-	const workbook = openFile(path.join(__dirname, relPath))
-
-	const sheet = workbook[0]
-	
-	const expected = [
-		[
-			{ type: 'string', value: 'a' },
-			{ type: 'string', value: 'b' },
-			{ type: 'string', value: 'c' }
-		],
-		[
-			{ type: 'number', value: 1 },
-			{ type: 'number', value: 2 },
-			{ type: 'number', value: 3 }
-		]
-	];
-
-	assert.deepEqual(sheet.rows, expected)
-
+const openFixture = (relPath) => {
+	return openFile(path.join(__dirname, relPath))[0]
 }
 
 describe('open-file', () => {
 
 	it('csv parsing', () => {
-		createScenario('fixtures/simple.csv')
+		const expected = [
+			[
+				{ type: 'string', value: 'a' },
+				{ type: 'string', value: 'b' },
+				{ type: 'string', value: 'c' }
+			],
+			[
+				{ type: 'number', value: 1 },
+				{ type: 'number', value: 2 },
+				{ type: 'number', value: 3 }
+			]
+		];
+		const sheet = openFixture('./fixtures/simple.csv')
+
+		assert.deepEqual(sheet.rows, expected)
 	})
 
 	it('xlsx parsing', () => {
-		createScenario('fixtures/simple.xlsx')
+		const expected = [
+			[
+				{ type: 'string', value: 'a' },
+				{ type: 'date', value: '2017/01/20' },
+				{ type: 'string', value: 'c' }
+			],
+			[
+				{ type: 'boolean', value: true },
+				{ type: 'number', value: 2 },
+				{ type: 'number', value: 3.99 }
+			]
+		]
+
+		const sheet = openFixture('./fixtures/simple.xlsx')
+		assert.deepEqual(sheet.rows, expected)
 	})
 })

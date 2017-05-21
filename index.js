@@ -12,7 +12,8 @@ const formattingMappings = {
 	number: (num) => num + '',
 	string: (str) => str,
 	// TODO: Use momentJs to pretty format dates.
-	date: (dt) => dt.toISOString()
+	date: (dt) => instanceof Date ? dt.toISOString() : dt,
+	boolean: (b) => b ? 'true' : 'false'
 }
 
 const formatData = (sheet) => {
