@@ -6,3 +6,4 @@ authors = ["AGhost-7 <jonathan.boudreau.92@gmail.com>"]
 [dependencies]
 termion = '*'
 calamine = '*'
+csv = '*'
