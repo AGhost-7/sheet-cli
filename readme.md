@@ -18,6 +18,6 @@ sheet-cli file [sheet]
 
 ## Hotkeys
 Arrow keys work, and at the moment `b` for doing up half a page and `d` for going down
-half a page. Scrolling up and down is also supported.
+half a page.
 
 To quit the program, simply press `q`.

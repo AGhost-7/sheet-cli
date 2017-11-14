@@ -31,6 +31,7 @@ const display = exports.display = (sheet) => {
 		log: process.env.SHEET_CLI_LOGFILE || path.join(process.env.HOME, '.sheetcli.log'),
 		smartCSR: true
 	})
+	screen._listenedMouse = true
 	const tbl = table({
 		parent: screen,
 		rows: rows
