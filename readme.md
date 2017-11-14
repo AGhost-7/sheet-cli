@@ -21,3 +21,8 @@ Arrow keys work, and at the moment `b` for doing up half a page and `d` for goin
 half a page.
 
 To quit the program, simply press `q`.
+
+## Limitations / Known Issues
+- Mouse support seems to be broken in blessedjs. Currently there is no
+scrolling support.
+- Merged cells aren't handled properly.
