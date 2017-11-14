@@ -23,7 +23,7 @@ pub fn parse_row(record: csv::Result<Vec<String>>) -> Result<Vec<Cell>, &'static
     Ok(row)
 }
 
-pub fn open(path: &Path) -> Result<Sheet, &'static str> {
+pub fn open(path: &Path) -> Result<Vec<Sheet>, &'static str> {
     let file = File::open(path).map_err(|_| "Failed to open file")?;
     let mut reader = Reader::from_reader(file);
 
@@ -34,7 +34,24 @@ pub fn open(path: &Path) -> Result<Sheet, &'static str> {
         rows.push(parse_row(record)?);
     }
 
-    Ok(Sheet { rows, headers })
+    let sheet_name = match path.file_stem() {
+        Some(os_str) => {
+            match os_str.to_str() {
+                Some(s) => Ok(s),
+                _ => Err("Failed to extract csv sheet name")
+            }
+        },
+        None => Err("Failed to extract csv sheet name")
+    };
+
+    sheet_name.map(|name| {
+        let sheet = Sheet {
+            name.to_owned(),
+            rows,
+            headers
+        };
+        vec![sheet]
+    })
 }
 
 macro_rules! assert_member {

@@ -1,8 +1,8 @@
 [package]
-name = "sheet-cli"
+name = "lib"
 version = "0.1.0"
 authors = ["AGhost-7 <jonathan.boudreau.92@gmail.com>"]
 
 [dependencies]
-lib = { path = './lib' }
-termion = '*'
+calamine = '*'
+csv = '*'
