@@ -7,34 +7,44 @@
     "sheet-cli": "index.js"
   },
   "scripts": {
-    "test": "mocha test/*.test.js"
+    "test": "mocha test/*.test.js",
+    "format": "prettier --write '**/*.js'",
+    "lint": "prettier --list-different '**/*.js' && eslint '**/*.js'",
+    "fix": "eslint --fix '**/*.js'"
   },
   "author": "Jonathan Boudreau <jonathan.boudreau.92@gmail.com>",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/AGhost-7/sheet-cli.git"
-	},
-	"bugs": {
-		"url": "https://github.com/AGhost-7/sheet-cli/issues"
-	},
-	"homepage": "https://github.com/AGhost-7/sheet-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AGhost-7/sheet-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AGhost-7/sheet-cli/issues"
+  },
+  "homepage": "https://github.com/AGhost-7/sheet-cli#readme",
   "license": "MIT",
-	"keywords": [
-		"CSV",
-		"Excel",
-		"XLSX",
-		"Viewer",
-		"Document",
-		"Command",
-		"Line"
-	],
+  "keywords": [
+    "CSV",
+    "Excel",
+    "XLSX",
+    "Viewer",
+    "Document",
+    "Command",
+    "Line"
+  ],
   "dependencies": {
     "blessed": "^0.1.81",
     "csv-parse": "^1.2.0",
     "xlsx": "^0.8.2"
   },
   "devDependencies": {
+    "eslint": "^5.0.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
     "mocha": "^3.2.0",
-    "power-assert": "^1.4.2"
+    "power-assert": "^1.4.2",
+    "prettier": "^1.13.6"
   }
 }
