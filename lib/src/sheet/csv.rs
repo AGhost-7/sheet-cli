@@ -3,11 +3,27 @@ extern crate csv;
 
 use std::path::Path;
 
-use sheet::{Cell, Sheet};
+use sheet::{Cell, CellKind, Sheet};
 use csv::Reader;
 use std::fs::File;
+use math::{Dimension, Position};
 
 pub fn parse_cell(str_cell: String) -> Cell {
+    let kind = if str_cell.len() == 0 {
+        CellKind::Empty
+    } else {
+        CellKind::String
+    };
+
+    Cell {
+        kind,
+        content: str_cell,
+        dimension: Dimension {
+            width: 1,
+            length: 1
+        },
+
+
     if str_cell.len() == 0 {
         Cell::Empty
     } else {

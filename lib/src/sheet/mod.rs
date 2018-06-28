@@ -1,8 +1,8 @@
 mod csv;
 mod xlsx;
 
-use params::Params;
 use std::path::Path;
+use math::{Dimension, Position};
 
 #[derive(Debug)]
 pub enum CellKind {
@@ -14,27 +14,15 @@ pub enum CellKind {
     Boolean
 }
 
-// A cell in xlsx can be merged, making it span multiple cells. To make things
-// simple, I will handle this by allowing a single cell to be in multiple
-// locations in the matrix, along with its dimension information.
-#[derive(Debug)]
-pub struct CellDimension {
-    pub width: u32,
-    pub height: u32
-}
-
-#[derive(Debug)]
-pub struct CellPosition {
-    pub x: u32,
-    pub y: u32
-}
-
 #[derive(Debug)]
 pub struct Cell {
     pub kind: CellKind,
     pub content: String,
-    pub dimension: CellDimension,
-    pub position: CellPosition
+    // A cell in xlsx can be merged, making it span multiple cells. To make things
+    // simple, I will handle this by allowing a single cell to be in multiple
+    // locations in the matrix, along with its dimension information.
+    pub dimension: Dimension,
+    pub position: Position
 }
 
 #[derive(Debug)]
