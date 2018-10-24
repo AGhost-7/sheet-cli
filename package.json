@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "blessed": "^0.1.81",
-    "csv-parse": "^1.2.0",
+    "csv-parse": "^2.5.0",
     "xlsx": "^0.8.2"
   },
   "devDependencies": {
